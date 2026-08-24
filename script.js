@@ -1,6 +1,6 @@
 const profile = Object.freeze({
   facebook: "https://www.facebook.com/dugg2309202",
-  instagram: "https://www.instagram.com/dugg2309202",
+  instagram: "https://www.instagram.com/dugg2309",
   github: "https://github.com/vutiendung23092002",
   tiktok: "https://www.tiktok.com/@duggn2309",
 });
