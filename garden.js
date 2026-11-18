@@ -22,6 +22,7 @@
     scrollTarget: 0,
     scrollPosition: 0,
     scrollVelocity: 0,
+    autoScroll: true,
     drift: 0,
     progress: 0,
     lastFrame: 0,
@@ -30,6 +31,7 @@
   let valley;
   let resizeTimer;
   let touchY;
+  let hoveredLink = null;
 
   // More coverage than the supplied file, without multiplying the entire scene.
   // Source: 2000 × 400 desktop and 1500 × 100 mobile, before its loop overlap.
@@ -43,7 +45,8 @@
     onError: fail,
     createScroller: () => ({
       getScrollPct: () => ({ normalized: state.progress, scrollVelocity: state.scrollVelocity }),
-      start() {}, onStart() {}, onPause() {}, destroy() {}, toggleAutoScroll() {},
+      toggleAutoScroll: enabled => { state.autoScroll = enabled; },
+      start() {}, onStart() {}, onPause() {}, destroy() {},
     }),
   });
 
@@ -60,6 +63,21 @@
     garden.classList.add("is-ready");
     garden.dataset.renderer = "flower-sprites";
     delete root.dataset.gardenOpening;
+    updateLinkHover();
+  }
+
+  function updateLinkHover() {
+    if (!state.ready || state.contextLost || state.failed) return;
+    const keyboardFocus = document.activeElement?.matches(".social-link:focus-visible");
+    const active = !state.paused && !document.hidden && Boolean(hoveredLink || keyboardFocus);
+    if (active === valley.valleyScene.buttonHover) return;
+    if (active) valley.startHoverTransition();
+    else valley.stopHoverTransition();
+  }
+
+  function clearLinkHover() {
+    hoveredLink = null;
+    updateLinkHover();
   }
 
   function stop() {
@@ -100,7 +118,7 @@
       const laps = Math.trunc(state.scrollPosition);
       state.scrollPosition -= laps;
       state.scrollTarget -= laps;
-      state.drift = (state.drift + dt * 0.0015) % 1;
+      if (state.autoScroll) state.drift = (state.drift + dt * 0.0015) % 1;
       const position = state.drift + state.scrollPosition;
       state.progress = position - Math.floor(position);
       try { render(); } catch (error) {
@@ -118,6 +136,7 @@
 
   function resume() {
     if (!valley || !state.loaded || state.paused || state.contextLost || state.failed || document.hidden || valley.rafID) return;
+    updateLinkHover();
     // Ignore the time spent in another tab or while motion was paused.
     valley.valleyScene.clock.oldTime = performance.now();
     state.lastFrame = performance.now();
@@ -138,6 +157,7 @@
     touchY = undefined;
     updateControls();
     if (paused) {
+      updateLinkHover();
       stop();
       if (valley) valley.valleyScene.settings.fadingMouse = true;
       delete root.dataset.gardenOpening;
@@ -223,6 +243,18 @@
 
   toggle.addEventListener("click", () => setPaused(!state.paused));
   reducedMotion.addEventListener("change", event => setPaused(event.matches));
+  for (const link of document.querySelectorAll(".social-link")) {
+    link.addEventListener("pointerenter", event => {
+      if (event.pointerType === "touch") return;
+      hoveredLink = link;
+      updateLinkHover();
+    });
+    link.addEventListener("pointerleave", () => {
+      if (hoveredLink === link) clearLinkHover();
+    });
+    link.addEventListener("focus", updateLinkHover);
+    link.addEventListener("blur", () => queueMicrotask(updateLinkHover));
+  }
   window.addEventListener("wheel", event => {
     if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
     const unit = event.deltaMode === 1 ? 15 : event.deltaMode === 2 ? innerHeight : 1;
@@ -272,17 +304,21 @@
     valley.valleyScene.settings.fadingMouse = Boolean(event.target.closest?.("a, button"));
   }, { passive: true });
   document.documentElement.addEventListener("pointerleave", () => {
+    clearLinkHover();
     if (state.loaded) valley.valleyScene.settings.fadingMouse = true;
   });
   window.addEventListener("pointerup", event => {
     if (event.pointerType === "touch" && state.loaded) valley.valleyScene.settings.fadingMouse = true;
   }, { passive: true });
   window.addEventListener("pointercancel", () => {
+    clearLinkHover();
     if (state.loaded) valley.valleyScene.settings.fadingMouse = true;
   }, { passive: true });
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stop();
-    else resume();
+    if (document.hidden) {
+      clearLinkHover();
+      stop();
+    } else resume();
   });
   window.addEventListener("pagehide", stop);
   window.addEventListener("pageshow", resume);
