@@ -3,106 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#080a12" />
-    <meta
-      name="description"
-      content="Personal website of Vũ Tiến Dũng - Developer, Data & Automation."
-    />
-
+    <meta name="theme-color" content="#080b07" />
+    <meta name="description" content="Personal website of Vũ Tiến Dũng — Developer, Data & Automation." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:title" content="Vũ Tiến Dũng | Developer" />
-    <meta
-      property="og:description"
-      content="Personal website of Vũ Tiến Dũng - Developer, Data & Automation."
-    />
+    <meta property="og:description" content="Building things with code, data and automation." />
     <meta property="og:url" content="https://vutiendung.io.vn/" />
     <meta property="og:site_name" content="Vũ Tiến Dũng" />
-
     <link rel="canonical" href="https://vutiendung.io.vn/" />
-    <link rel="icon" href="./favicon.ico" sizes="any" />
-    <link rel="preload" href="./avatar.jpg" as="image" type="image/jpeg" />
+    <link rel="icon" href="./assets/avatar-beige-icon.png" type="image/png" sizes="64x64" />
+    <link rel="preload" href="./assets/fonts/barlow-condensed-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/fonts/barlow-condensed-vietnamese.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/garden-mobile.webp" as="image" media="(max-width: 700px)" fetchpriority="high" />
+    <link rel="preload" href="./assets/garden-desktop.webp" as="image" media="(min-width: 701px)" fetchpriority="high" />
+    <script>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const root = document.documentElement;
+        root.dataset.gardenOpening = "loading";
+        // Reveal the profile if the renderer or its assets fail to start.
+        setTimeout(() => { delete root.dataset.gardenOpening; }, 10000);
+      }
+    </script>
     <link rel="stylesheet" href="./style.css" />
-
     <title>Vũ Tiến Dũng | Developer</title>
   </head>
   <body>
-    <div class="ambient" aria-hidden="true">
-      <span class="blob blob-one"></span>
-      <span class="blob blob-two"></span>
-      <span class="blob blob-three"></span>
-      <span class="noise"></span>
+    <div class="garden-loader" role="status"><span class="sr-only">Đang tải vườn hoa</span></div>
+    <a class="skip-link" href="#profile">Đến nội dung chính</a>
+    <div class="garden" aria-hidden="true">
+      <picture class="garden-backdrop">
+        <source media="(max-width: 700px)" srcset="./assets/garden-mobile.webp" />
+        <img id="garden-image" src="./assets/garden-desktop.webp" alt="" width="1920" height="1200" fetchpriority="high" decoding="async" />
+      </picture>
+      <div class="garden-stage js-canvas-container"></div>
+      <div class="garden-shade"></div>
     </div>
-
-    <main class="page">
-      <section class="profile-wrap" aria-labelledby="profile-name">
-        <article class="profile-card">
-          <div class="avatar-wrap">
-            <img
-              class="avatar"
-              src="./avatar.jpg"
-              alt="Ảnh đại diện mèo của Vũ Tiến Dũng"
-              width="640"
-              height="640"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </div>
-
-          <header class="profile-header">
-            <p class="eyebrow">Hello, I’m</p>
-            <h1 id="profile-name">Vũ Tiến Dũng</h1>
-            <p class="role">Developer <span aria-hidden="true">•</span> Data <span aria-hidden="true">•</span> Automation</p>
-            <a class="domain" href="https://vutiendung.io.vn/" aria-label="vutiendung.io.vn">
-              <span class="status-dot" aria-hidden="true"></span>
-              vutiendung.io.vn
-            </a>
-          </header>
-
-          <p class="bio">Building things with code, data and automation.</p>
-
+    <div class="site-shell">
+      <header class="masthead">
+        <a class="identity" href="./" aria-label="Vũ Tiến Dũng — Trang chủ">
+          <img class="avatar" src="./assets/avatar-beige.webp" alt="" width="44" height="44" decoding="async" />
+          <span>Vũ Tiến Dũng</span>
+        </a>
+        <a class="domain" href="https://vutiendung.io.vn/">vutiendung.io.vn</a>
+      </header>
+      <main class="main" id="profile" tabindex="-1">
+        <section class="hero" aria-labelledby="profile-name">
+          <p class="role" lang="en">Developer <span aria-hidden="true">·</span> Data <span aria-hidden="true">·</span> Automation</p>
+          <h1 class="hero-name" id="profile-name"><span>Vũ Tiến Dũng</span></h1>
+          <p class="bio" lang="en"><span>Building things with code,</span><span>data and automation.</span></p>
           <nav class="social-grid" aria-label="Liên kết mạng xã hội">
-            <a class="social-link" data-social="facebook" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M13.7 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5H17V3.6c-.8-.1-1.6-.2-2.4-.2-2.4 0-4.1 1.5-4.1 4.2v2.3H7.8V13h2.7v8h3.2Z" />
-              </svg>
-              <span>Facebook</span>
-              <span class="arrow" aria-hidden="true">↗</span>
+            <a class="social-link" data-social="facebook" href="https://www.facebook.com/dugg2309202" target="_blank" rel="noopener noreferrer">
+              <span>Facebook</span><span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (mở trong tab mới)</span>
             </a>
-
-            <a class="social-link" data-social="instagram" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill-rule="evenodd" d="M7.3 2.8h9.4a4.5 4.5 0 0 1 4.5 4.5v9.4a4.5 4.5 0 0 1-4.5 4.5H7.3a4.5 4.5 0 0 1-4.5-4.5V7.3a4.5 4.5 0 0 1 4.5-4.5Zm-.1 2A2.4 2.4 0 0 0 4.8 7.2v9.6a2.4 2.4 0 0 0 2.4 2.4h9.6a2.4 2.4 0 0 0 2.4-2.4V7.2a2.4 2.4 0 0 0-2.4-2.4H7.2Zm10.2 1.5a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM12 7.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2Zm0 2a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2Z" clip-rule="evenodd" />
-              </svg>
-              <span>Instagram</span>
-              <span class="arrow" aria-hidden="true">↗</span>
+            <a class="social-link" data-social="instagram" href="https://www.instagram.com/dugg2309" target="_blank" rel="noopener noreferrer">
+              <span>Instagram</span><span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (mở trong tab mới)</span>
             </a>
-
-            <a class="social-link" data-social="github" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12 2.5a9.7 9.7 0 0 0-3.1 18.9c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.6 2.4 1.1 2.9.9.1-.7.4-1.1.7-1.4-2.3-.2-4.7-1.1-4.7-5.1 0-1.1.4-2 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1a10 10 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.8 1.1 1.7 1.1 2.8 0 4-2.4 4.9-4.7 5.1.4.3.7 1 .7 1.9v2.6c0 .3.2.6.7.5A9.7 9.7 0 0 0 12 2.5Z" clip-rule="evenodd" />
-              </svg>
-              <span>GitHub</span>
-              <span class="arrow" aria-hidden="true">↗</span>
+            <a class="social-link social-link-primary" data-social="github" href="https://github.com/vutiendung23092002" target="_blank" rel="noopener noreferrer">
+              <span>GitHub</span><span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (mở trong tab mới)</span>
             </a>
-
-            <a class="social-link" data-social="tiktok" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M15.4 3c.2 1.7 1.1 3.1 2.5 4.1a6.2 6.2 0 0 0 3.1 1v3.2a9.3 9.3 0 0 1-5.5-1.8v6.3a6.2 6.2 0 1 1-5.4-6.1v3.4a2.9 2.9 0 1 0 2.1 2.8V3h3.2Z" />
-              </svg>
-              <span>TikTok</span>
-              <span class="arrow" aria-hidden="true">↗</span>
+            <a class="social-link" data-social="tiktok" href="https://www.tiktok.com/@dugn2309202" target="_blank" rel="noopener noreferrer">
+              <span>TikTok</span><span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (mở trong tab mới)</span>
             </a>
           </nav>
-        </article>
-
-        <footer class="footer">
-          <p>© 2026 Vũ Tiến Dũng</p>
-          <p>Built with code &amp; caffeine</p>
-        </footer>
-      </section>
-    </main>
-
+        </section>
+      </main>
+      <footer class="footer">
+        <p>© <span id="copyright-year">2026</span> Vũ Tiến Dũng</p>
+        <div class="garden-controls">
+          <span class="scroll-hint">Cuộn để khám phá</span>
+          <button class="motion-toggle garden-control" type="button" aria-label="Tạm dừng chuyển động" aria-pressed="false" title="Tạm dừng chuyển động" hidden>
+            <svg class="motion-spark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 2 18.5 13.5 30 16 18.5 18.5 16 30 13.5 18.5 2 16 13.5 13.5 16 2Z" fill="currentColor" /></svg>
+            <svg class="motion-play" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m12 8 13 8-13 8V8Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+          </button>
+          <button class="sound-toggle garden-control" type="button" aria-label="Âm thanh khu vườn" aria-pressed="false" title="Bật âm thanh" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 5 6 9H3v6h3l5 4z" />
+              <path class="sound-waves" d="M15 9a4.2 4.2 0 0 1 0 6m3-9a8.5 8.5 0 0 1 0 12" />
+              <path class="sound-muted" d="m15 10 5 5m0-5-5 5" />
+            </svg>
+          </button>
+          <span id="sound-status" class="sr-only" role="status"></span>
+        </div>
+      </footer>
+    </div>
+    <audio id="garden-audio" src="./assets/valley/ambience.mp3" preload="none" loop></audio>
     <script src="./script.js" defer></script>
+    <script src="./assets/valley/runtime.js" defer></script>
+    <script src="./garden.js" defer></script>
   </body>
 </html>
