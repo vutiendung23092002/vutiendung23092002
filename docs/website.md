@@ -15,7 +15,7 @@ Mở thư mục bằng VS Code và chạy **Live Server** từ `index.html`. Dù
 - Nút loa phát hoặc tạm dừng bản âm thanh nền từ file mẫu. Âm thanh phát lặp sau khi bạn bật.
 - Ảnh nền và font được lưu trong repo. Không phụ thuộc CDN khi chạy.
 
-Thông tin tạo ảnh và giấy phép font: [assets/README.md](assets/README.md).
+Thông tin tạo ảnh và giấy phép font: [assets/README.md](../assets/README.md).
 
 Phần điều khiển cảnh nằm trong `garden.js`. Bộ dựng và tài nguyên từ file mẫu nằm trong `assets/valley/`.
 
